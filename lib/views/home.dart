@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqlite_api.dart';
+import 'package:to_do_app/services/auth.dart';
+import 'package:to_do_app/views/settings.dart';
 import 'package:to_do_app/views/task.dart';
 import 'package:to_do_app/widgets.dart';
 
-import '../database.dart';
+import '../services/database.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -12,6 +13,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   DatabaseHelper _dbClient = DatabaseHelper();
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,6 +87,24 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ],
+              ),
+              Positioned(
+                //left: 25.0,
+                bottom: 25.0,
+                child: SizedBox(
+                  height: 75,
+                  width: 75,
+                  child: FloatingActionButton(
+                      heroTag: "cameraBtn",
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SettingsView()));
+                      },
+                      child: const Icon(Icons.settings),
+                      backgroundColor: Colors.grey[600]),
+                ),
               ),
               // Position for floating action button
               Positioned(

@@ -2,13 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:to_do_app/database.dart';
+import 'package:to_do_app/services/database.dart';
 import 'package:to_do_app/models/picture_model.dart';
 import 'package:to_do_app/models/subtask_model.dart';
 import 'package:to_do_app/models/task_model.dart';
-import 'package:to_do_app/views/picture.dart';
 import 'package:to_do_app/widgets.dart';
-import 'package:to_do_app/utility.dart';
+import 'package:to_do_app/services/utility.dart';
 
 class TaskView extends StatefulWidget {
   final Task task;

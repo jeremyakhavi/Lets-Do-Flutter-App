@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_app/database.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:to_do_app/services/database.dart';
 
 // Widget for individual tasks on home page
 class TaskWidget extends StatelessWidget {
@@ -104,3 +105,26 @@ class RemoveGlow extends ScrollBehavior {
     return child;
   }
 }
+
+class Loading extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.indigo[50],
+      child: Center(
+        child: SpinKitChasingDots(color: Colors.blue, size: 60.0),
+      ),
+    );
+  }
+}
+
+const textInputDecoration = InputDecoration(
+  fillColor: Colors.white,
+  filled: true,
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.white, width: 2.0),
+  ),
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.blue, width: 2.0),
+  ),
+);
