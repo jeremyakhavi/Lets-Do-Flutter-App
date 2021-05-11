@@ -3,8 +3,7 @@ import 'package:to_do_app/services/auth.dart';
 import 'package:to_do_app/views/settings.dart';
 import 'package:to_do_app/views/task.dart';
 import 'package:to_do_app/widgets.dart';
-
-import '../services/database.dart';
+import 'package:to_do_app/services/database.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -95,7 +94,7 @@ class _HomeState extends State<Home> {
                   height: 75,
                   width: 75,
                   child: FloatingActionButton(
-                      heroTag: "cameraBtn",
+                      heroTag: "settingsBtn",
                       onPressed: () {
                         Navigator.push(
                             context,

@@ -8,6 +8,8 @@ import 'package:to_do_app/models/subtask_model.dart';
 import 'package:to_do_app/models/task_model.dart';
 import 'package:to_do_app/widgets.dart';
 import 'package:to_do_app/services/utility.dart';
+import 'package:intent/intent.dart' as android_intent;
+import 'package:intent/action.dart' as android_action;
 
 class TaskView extends StatefulWidget {
   final Task task;
@@ -267,7 +269,15 @@ class _TaskViewState extends State<TaskView> {
                   width: 75,
                   child: FloatingActionButton(
                       heroTag: "cameraBtn",
-                      onPressed: getImage,
+                      // TODO - implement extra getImage() functionality to android intent
+                      // i.e. get image path etc.
+                      onPressed: () => android_intent.Intent()
+                        ..setAction(android_action.Action.ACTION_IMAGE_CAPTURE)
+                        ..startActivityForResult().then(
+                          (data) => print(data),
+                          onError: (e) => print(e.toString()),
+                        ),
+                      // onPressed: getImage,
                       child: const Icon(Icons.camera_alt),
                       backgroundColor: Colors.blue[700]),
                 ),

@@ -3,6 +3,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:to_do_app/models/picture_model.dart';
 import 'package:to_do_app/models/subtask_model.dart';
 import 'package:to_do_app/models/task_model.dart';
+import 'package:to_do_app/services/sharedpreferences.dart';
 
 class DatabaseHelper {
   Future<Database> database() async {
@@ -52,6 +53,7 @@ class DatabaseHelper {
         .then((value) {
       taskID = value;
     });
+    incrementCount();
     return taskID;
   }
 

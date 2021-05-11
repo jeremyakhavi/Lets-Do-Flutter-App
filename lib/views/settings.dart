@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/services/auth.dart';
+import 'package:to_do_app/services/sharedpreferences.dart';
 
 class SettingsView extends StatefulWidget {
   @override
@@ -8,6 +9,13 @@ class SettingsView extends StatefulWidget {
 
 class _SettingsViewState extends State<SettingsView> {
   final AuthService _auth = AuthService();
+  int _counter = 0;
+
+  _SettingsViewState() {
+    getCount().then((val) => setState(() {
+          _counter = val;
+        }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +53,14 @@ class _SettingsViewState extends State<SettingsView> {
                               },
                             ),
                           ]),
-                      Text('Hmmm'),
+                      // display total number of tasks user has added (uses shared preferences)
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Text(
+                            'You have added $_counter tasks since downloading Let\'s Do!',
+                            style: TextStyle(fontSize: 20.0, height: 1.5)),
+                      ),
+                      Icon(Icons.info_outline)
                     ],
                   )
                 ]))));
