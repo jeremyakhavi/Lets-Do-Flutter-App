@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/services/auth.dart';
 import 'package:to_do_app/services/sharedpreferences.dart';
+import 'package:share/share.dart';
+import 'package:to_do_app/views/userguide.dart';
+import 'package:intent/intent.dart' as android_intent;
+import 'package:intent/action.dart' as android_action;
+import 'package:intent/extra.dart' as android_extra;
 
 class SettingsView extends StatefulWidget {
   @override
@@ -27,7 +32,7 @@ class _SettingsViewState extends State<SettingsView> {
                 width: double.infinity,
                 child: Stack(children: [
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -53,6 +58,19 @@ class _SettingsViewState extends State<SettingsView> {
                               },
                             ),
                           ]),
+                      // message to inform user about button for user guide
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Text(
+                            'To view the user guide for this app, please tap the button in the bottom right',
+                            style: TextStyle(fontSize: 14.0, height: 1.5)),
+                      ),
+                      const Divider(
+                        height: 0,
+                        thickness: 2.5,
+                        indent: 20,
+                        endIndent: 20,
+                      ),
                       // display total number of tasks user has added (uses shared preferences)
                       Padding(
                         padding: const EdgeInsets.all(25.0),
@@ -60,9 +78,79 @@ class _SettingsViewState extends State<SettingsView> {
                             'You have added $_counter tasks since downloading Let\'s Do!',
                             style: TextStyle(fontSize: 20.0, height: 1.5)),
                       ),
-                      Icon(Icons.info_outline)
+                      const Divider(
+                        height: 0,
+                        thickness: 2.5,
+                        indent: 20,
+                        endIndent: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Column(
+                          children: [
+                            Text(
+                                'Got any feedback? Want to report an issue? Suggest a feature?',
+                                style: TextStyle(fontSize: 14.0, height: 1.5)),
+                            TextButton(
+                                child: Text('Email us'),
+                                onPressed: () {
+                                  android_intent.Intent()
+                                    ..setAction(
+                                        android_action.Action.ACTION_VIEW)
+                                    ..setData(Uri(
+                                        scheme: "mailto",
+                                        path: "jeremyakhavi@me.com"))
+                                    ..startActivity()
+                                        .catchError((e) => print(e));
+                                }),
+                          ],
+                        ),
+                      ),
                     ],
-                  )
+                  ),
+                  // button to share app using ShareActionProvider
+                  Positioned(
+                    left: 25.0,
+                    bottom: 20.0,
+                    child: SizedBox(
+                        height: 75,
+                        width: 75,
+                        child: Builder(builder: (BuildContext context) {
+                          return FloatingActionButton(
+                              heroTag: "shareBtn",
+                              onPressed: () => _onShare(context),
+                              child: const Icon(Icons.ios_share),
+                              backgroundColor: Colors.lightBlue[900]);
+                        })),
+                  ),
+                  Positioned(
+                    right: 25.0,
+                    bottom: 25.0,
+                    child: SizedBox(
+                      height: 75,
+                      width: 75,
+                      // button to open WebView for userguide
+                      child: FloatingActionButton(
+                          heroTag: "userGuideBtn",
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => WebViewWidget()));
+                          },
+                          child: const Icon(Icons.menu_book),
+                          backgroundColor: Colors.purple[600]),
+                    ),
+                  ),
                 ]))));
+  }
+
+  // function to bring up share sheet using ACTION_SEND intent on Android
+  _onShare(BuildContext context) async {
+    final RenderBox box = context.findRenderObject() as RenderBox;
+    await Share.share(
+        'I am being so productive with Let\'s Do, you should download it too!',
+        subject: 'I am being so productive with Lets Do',
+        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }
 }

@@ -5,6 +5,7 @@ import 'package:to_do_app/models/user_model.dart';
 import 'package:to_do_app/services/auth.dart';
 import 'package:to_do_app/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
+//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

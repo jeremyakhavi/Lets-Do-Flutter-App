@@ -65,6 +65,14 @@ class DatabaseHelper {
     await _database.rawDelete("DELETE FROM photos WHERE taskID = '$id'");
   }
 
+  // function to remove all tasks
+  Future<void> removeAllTasks() async {
+    Database _database = await database();
+    await _database.rawDelete("DELETE FROM tasks");
+    await _database.rawDelete("DELETE FROM subTasks");
+    await _database.rawDelete("DELETE FROM photos");
+  }
+
   // function to update the title of an existing task
   Future<void> updateTitle(int id, String taskTitle) async {
     Database _database = await database();

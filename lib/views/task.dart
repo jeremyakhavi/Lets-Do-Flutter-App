@@ -144,7 +144,7 @@ class _TaskViewState extends State<TaskView> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 0.0),
                     child: TextField(
-                      onSubmitted: (value) {
+                      onSubmitted: (value) async {
                         if (value != "") {
                           if (_taskID != 0) {
                             _dbClient.updateDescription(_taskID, value);

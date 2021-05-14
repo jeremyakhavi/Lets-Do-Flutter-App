@@ -1,0 +1,192 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>Let's Do User Guide</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+
+    $(document).ready(function(){
+      // Add smooth scrolling to all links
+      $("a").on('click', function(event) {
+        if (this.hash !== "") {
+          event.preventDefault();
+          var hash = this.hash;
+          $('html, body').animate({
+            scrollTop: $(hash).offset().top - 60
+          }, 1100, function(){
+          });
+        }
+      });
+    });
+    </script>
+
+</head>
+
+  <body>
+
+    <nav class="navbar sticky-top navbar-expand-md navbar-light bg-light pb-3">
+        <a class="navbar-brand" href="#intro">Let's Do</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapseNav" aria-controls="collapseNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="collapseNav">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#login">Logging in</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#add">Adding new tasks</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#addSubtask">Adding sub-tasks</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#view">View all tasks</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#edit">Editing a task</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#delete">Deleting a task</a>
+                    </li>
+          </ul>
+        </div>
+      </nav>
+
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-3 text-center bg-light" id="intro">
+      <div class="mx-auto">
+          <img src="images/logo.png" style="height: 8rem" class="img-fluid" alt="Let's Do Logo">
+        <h1 class="display-4 font-weight-normal"> Welcome&nbsp;to Let's&nbsp;Do</h1>
+        <p class="lead font-weight-normal">A new standard in managing your tasks on Android</p>
+      </div>
+    </div>
+
+    <div class="position-relative overflow-hidden p-3 p-sm-5 m-3 text-center bg-light">
+        <div class="row">
+            <div class="col-xl-8 col-md-5 mx-auto">
+                <h1 class="display-4 font-weight-normal mb-5">Learn how to use the app</h1>
+                <p class="lead font-weight-normal">You can create new tasks</p>
+                <p class="lead font-weight-normal">You can add descriptions to tasks</p>
+                <p class="lead font-weight-normal">You can add sub-tasks</p>
+                <p class="lead font-weight-normal">You can add pictures</p>
+            </div>
+        <div class="col-xl-3 mx-auto my-auto col-md-5 px-5 mx-md-0 px-md-0">
+            <img src="images/homescreen.png" class="img-fluid" alt="Let's Do Logo">
+        </div>
+    </div>
+    </div>
+
+    <div class="position-relative overflow-hidden p-3 p-sm-5 m-3 text-center bg-light" id="login">
+        <div class="row">
+            <div class="col-xl-8 col-md-5 mx-auto">
+                <h1 class="display-4 font-weight-normal mb-5">Logging In</h1>
+                <p class="lead">When opening the app for the first time, you'll be presented with a sign in screen</p>
+                <p class="lead">If you already have an account, simply sign in with your email and password</p>
+                <p class="lead">For new users, please tap register in the top right to create an account</p>
+                <p class="lead">Clicking either sign in or register will get you to the homepage of Let's Do!</p>
+            </div>
+        <div class="col-xl-3 mx-auto my-auto col-md-5 px-5 mx-md-0 px-md-0">
+            <img src="images/sign_in.png" class="img-fluid" alt="Let's Do Logo">
+        </div>
+    </div>
+    </div>
+
+    <div class="position-relative overflow-hidden p-3 p-sm-5 m-3 text-center bg-light" id="add">
+        <div class="row">
+            <div class="col-xl-8 col-md-5 mx-auto">
+                <h1 class="display-4 font-weight-normal mb-5">Adding new tasks</h1>
+                <p class="lead">From the home screen, look towards the bottom and tap the blue add button</p>
+                <p class="lead">You will now be prompted to type in a title for your new task</p>
+                <p class="lead">Tap 'enter' on your keyboard to save the title</p>
+                <p class="lead">You can now add optional information to your task, such as description</p>
+                <p class="lead">Remmeber to tap 'enter' on your keyboard to save the description</p>
+            </div>
+        <div class="col-xl-3 mx-auto my-auto col-md-5 px-5 mx-md-0 px-md-0">
+            <img src="images/add_task.png" class="img-fluid" alt="Add task 1">
+            <img src="images/new_title.png" class="img-fluid" alt="Add task 2">
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <div class="position-relative overflow-hidden p-3 p-sm-5 m-3 text-center bg-light" id="addSubtask">
+        <div class="row">
+            <div class="col-xl-8 col-md-5 mx-auto">
+                <h1 class="display-4 font-weight-normal mb-5">Adding sub-tasks</h1>
+                <p class="lead">Whilst in an app, tap 'new sub-task...' and type the name of the sub-task</p>
+                <p class="lead">Tap 'enter' to save the sub-task and you'll see it appear with a checkbox below</p>
+                <p class="lead">You can tap an existing sub-task to mark it as complete</p>
+                <p class="lead">Notice that the sub-task greys out with a strikethrough when completed</p>
+            </div>
+        <div class="col-xl-3 mx-auto my-auto col-md-5 px-5 mx-md-0 px-md-0">
+            <img src="images/sub_task.png" class="img-fluid" alt="Sub-task">
+        </div>
+    </div>
+    </div>
+
+    <div class="position-relative overflow-hidden p-3 p-sm-5 m-3 text-center bg-light" id="view">
+        <div class="row">
+            <div class="col-xl-8 col-md-5 mx-auto">
+                <h1 class="display-4 font-weight-normal mb-5">View all tasks</h1>
+                <p class="lead">All tasks can be viewed from the homescreen</p>
+                <p class="lead">You can see the title and description of each task</p>
+                <p class="lead">Scrolling down allows you to view more tasks if you have more than fit on the screen</p>
+                <p class="lead">Tap on any task to bring up more details and edit it</p>
+            </div>
+        <div class="col-xl-3 mx-auto my-auto col-md-5 px-5 mx-md-0 px-md-0">
+            <img src="images/edit_task1.png" class="img-fluid" alt="Sub-task">
+        </div>
+    </div>
+    </div>
+
+    <div class="position-relative overflow-hidden p-3 p-sm-5 m-3 text-center bg-light" id="edit">
+        <div class="row">
+            <div class="col-xl-8 col-md-5 mx-auto">
+                <h1 class="display-4 font-weight-normal mb-5">Editing a task</h1>
+                <p class="lead font-weight-bold">Title and description</p>
+                <p class="lead">Tap on the title or description to edit them</p>
+                <p class="lead">Simply make any changes you would like using th keyboard, and tap 'enter'</p>
+                <p class="lead font-weight-bold">Sub-tasks</p>
+                <p class="lead">To complete a sub-task simply tap the checkbox or the text</p>
+                <p class="lead">The sub-task will grey out with strikethrough and the checkbox will fill</p>
+                <p class="lead">If a completed task is no longer complete, simply tap the checkbox or text again</p>
+                <p class="lead font-weight-bold">Adding photos</p>
+                <p class="lead">To add a photo tap the camera button in the bottom left of your screen</p>
+                <p class="lead">This will bring up the camera view, tap the camera to take the photo, and tap the tick to confirm</p>
+                <p class="lead">The photo will not appear below the task description</p>
+            </div>
+            <div class="col-xl-3 mx-auto my-auto col-md-5 px-5 mx-md-0 px-md-0">
+                <img src="images/edit_task.png" class="img-fluid mb-4" alt="Add task 1">
+            </div>
+    </div>
+    </div>
+
+    <div class="position-relative overflow-hidden p-3 p-sm-5 m-3 text-center bg-light" id="delete" id="delete">
+        <div class="row">
+            <div class="col-xl-8 col-md-5 mx-auto">
+                <h1 class="display-4 font-weight-normal mb-5">Deleting a task</h1>
+                <p class="lead">When the task is on the screen, look at the bottom right</p>
+                <p class="lead">Simply tap the red delete button to delete the task</p>
+                <p class="lead">The task, along with all associated sub-tasks and photos will be deleted</p>
+                <p class="lead font-weight-normal">You can delete all tasks by tapping and holding on the home screen, then tap 'delete all'</p>
+                
+            </div>
+            <div class="col-xl-3 mx-auto my-auto col-md-5 px-5 mx-md-0 px-md-0">
+                <img src="images/edit_task2.png" class="img-fluid mb-4" alt="Add task 1">
+            </div>
+    </div>
+    </div>
+
+  </body>
+</html>
