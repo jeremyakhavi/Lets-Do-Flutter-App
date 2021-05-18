@@ -4,6 +4,8 @@ import 'package:to_do_app/widgets.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
+  final double screenHeight =
+      MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.height;
   Register({this.toggleView});
 
   @override
@@ -46,7 +48,7 @@ class _RegisterState extends State<Register> {
                 Container(
                   child: Image(
                     image: AssetImage('assets/logo.png'),
-                    height: 125,
+                    height: widget.screenHeight * 0.1,
                   ),
                 ),
                 Container(

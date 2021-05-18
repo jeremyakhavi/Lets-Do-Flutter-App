@@ -11,14 +11,6 @@ class WebViewWidget extends StatefulWidget {
 }
 
 class WebViewWidgetState extends State<WebViewWidget> {
-  WebViewController _controller;
-  @override
-  void initState() {
-    super.initState();
-    // Enable hybrid composition.
-    // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(

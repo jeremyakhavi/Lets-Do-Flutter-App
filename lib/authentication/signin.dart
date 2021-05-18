@@ -3,6 +3,8 @@ import 'package:to_do_app/services/auth.dart';
 import 'package:to_do_app/widgets.dart';
 
 class SignIn extends StatefulWidget {
+  final double screenHeight =
+      MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.height;
   final Function toggleView;
   SignIn({this.toggleView});
 
@@ -46,7 +48,7 @@ class _SignInState extends State<SignIn> {
                 Container(
                   child: Image(
                     image: AssetImage('assets/logo.png'),
-                    height: 125,
+                    height: widget.screenHeight * 0.1,
                   ),
                 ),
                 Container(
