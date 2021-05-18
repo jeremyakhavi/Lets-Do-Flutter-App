@@ -100,14 +100,15 @@ class DatabaseHelper {
   Future<void> updateTitle(int id, String taskTitle) async {
     Database _database = await database();
     await _database.rawUpdate(
-        "UPDATE tasks SET taskTitle = '$taskTitle' WHERE id = '$id'");
+        'UPDATE tasks SET taskTitle = ? WHERE id = ?', [taskTitle, id]);
   }
 
   // function to update the description of an existing task
   Future<void> updateDescription(int id, String taskDescription) async {
     Database _database = await database();
     await _database.rawUpdate(
-        "UPDATE tasks SET taskDescription = '$taskDescription' WHERE id = '$id'");
+        'UPDATE tasks SET taskDescription = ? WHERE id = ?',
+        [taskDescription, id]);
   }
 
   // function to add new sub-task to database
@@ -121,7 +122,8 @@ class DatabaseHelper {
   Future<void> updateSubTask(int id, int complete) async {
     Database _database = await database();
     await _database.rawUpdate(
-        "UPDATE subTasks SET complete = '$complete' WHERE id = '$id'");
+      "UPDATE subTasks SET complete = '$complete' WHERE id = '$id'",
+    );
   }
 
   // function to get tasks from database, returns a list of all tasks (type Task)

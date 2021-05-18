@@ -6,6 +6,7 @@ import 'package:to_do_app/services/database.dart';
 import 'package:to_do_app/models/picture_model.dart';
 import 'package:to_do_app/models/subtask_model.dart';
 import 'package:to_do_app/models/task_model.dart';
+import 'package:to_do_app/views/home.dart';
 import 'package:to_do_app/widgets.dart';
 import 'package:to_do_app/services/utility.dart';
 
@@ -91,6 +92,8 @@ class _TaskViewState extends State<TaskView> {
 
   @override
   Widget build(BuildContext context) {
+    final _titleController = TextEditingController();
+    final _descriptionController = TextEditingController();
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -104,46 +107,74 @@ class _TaskViewState extends State<TaskView> {
                   children: [
                     // Back button to return to home screen
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: BackButton(),
-                    ),
+                        padding: const EdgeInsets.all(8.0),
+                        child: BackButton(
+                          onPressed: () {
+                            // update database title with most up-to-date value
+                            if (_titleController.text != "") {
+                              _dbClient.updateTitle(
+                                  _taskID, _titleController.text);
+                            }
+                            if (_descriptionController.text != "") {
+                              if (_taskID != 0) {
+                                _dbClient.updateDescription(
+                                    _taskID, _descriptionController.text);
+                              }
+                            }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Home()),
+                            );
+                          },
+                        )),
+
                     Expanded(
                       // Text field for title of task
-                      child: TextField(
-                        focusNode: _focusTitle,
-                        onSubmitted: (value) async {
-                          // instantiate Task object to add to task table in database
-                          // ensure that field is not empty
-                          if (value != "") {
-                            // check if received task from home view is null
-                            // if null then create new task
-                            if (widget.task == null) {
-                              Task _newTask = Task(taskTitle: value);
-                              _taskID = await _dbClient.addTask(_newTask);
-                              setState(() {
-                                showContent = true;
-                                _title = value;
-                              });
-                            } else {
-                              // update title if task is not null
-                              _dbClient.updateTitle(_taskID, value);
-                              setState(() {
-                                _title = value;
-                              });
+                      child: Focus(
+                        onFocusChange: (value) async {
+                          if (!value) {
+                            print(_titleController.text);
+                            print('FOCUS CHANGE');
+                            // instantiate Task object to add to task table in database
+                            // ensure that field is not empty
+                            if (_titleController.text != "") {
+                              // check if received task from home view is null
+                              // if null then create new task
+                              if (widget.task == null) {
+                                Task _newTask =
+                                    Task(taskTitle: _titleController.text);
+                                _taskID = await _dbClient.addTask(_newTask);
+                                setState(() {
+                                  showContent = true;
+                                  _title = _titleController.text;
+                                });
+                              } else {
+                                // update title if task is not null
+                                _dbClient.updateTitle(
+                                    _taskID, _titleController.text);
+                                setState(() {
+                                  _title = _titleController.text;
+                                });
+                              }
                             }
-                            // change focus to description
-                            _focusDescription.requestFocus();
                           }
                         },
-                        // populate text field with task title from database
-                        controller: TextEditingController()..text = _title,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 25.0,
-                        ),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Task Title",
+                        child: TextField(
+                          focusNode: _focusTitle,
+                          onSubmitted: (value) {
+                            // change focus to description
+                            _focusDescription.requestFocus();
+                          },
+                          // populate text field with task title from database
+                          controller: _titleController..text = _title,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 25.0,
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Task Title",
+                          ),
                         ),
                       ),
                     ),
@@ -154,26 +185,32 @@ class _TaskViewState extends State<TaskView> {
                   visible: showContent,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 0.0),
-                    child: TextField(
-                      onSubmitted: (value) async {
-                        if (value != "") {
-                          // if task is valid then update description
-                          if (_taskID != 0) {
-                            _dbClient.updateDescription(_taskID, value);
+                    child: Focus(
+                      onFocusChange: (value) async {
+                        if (!value) {
+                          if (_descriptionController.text != "") {
+                            // if task is valid then update description
+                            if (_taskID != 0) {
+                              _dbClient.updateDescription(
+                                  _taskID, _descriptionController.text);
+                            }
                           }
+                          setState(() {
+                            _description = _descriptionController.text;
+                          });
                         }
-                        setState(() {
-                          _description = value;
-                        });
-                        // change focus to sub task
-                        _focusSubTask.requestFocus();
                       },
-                      // populate text field with description value in database
-                      controller: TextEditingController()..text = _description,
-                      focusNode: _focusDescription,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Description for task"),
+                      child: TextField(
+                        onSubmitted: (value) {
+                          _focusSubTask.requestFocus();
+                        },
+                        // populate text field with description value in database
+                        controller: _descriptionController..text = _description,
+                        focusNode: _focusDescription,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Description for task"),
+                      ),
                     ),
                   ),
                 ),
@@ -249,7 +286,7 @@ class _TaskViewState extends State<TaskView> {
                             controller: TextEditingController()..text = "",
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: ("New sub-task...")),
+                                hintText: ("New sub-task... (tap enter)")),
                           ),
                         ),
                       ],
