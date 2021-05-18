@@ -1,4 +1,4 @@
-import 'dart:typed_data';
+// model for photos, allowing photos to be easily stored in sql database
 
 class Photo {
   final int id;

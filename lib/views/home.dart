@@ -1,13 +1,17 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:provider/provider.dart';
-import 'package:to_do_app/main.dart';
-import 'package:to_do_app/services/auth.dart';
 import 'package:to_do_app/views/settings.dart';
 import 'package:to_do_app/views/task.dart';
 import 'package:to_do_app/widgets.dart';
 import 'package:to_do_app/services/database.dart';
+
+/* 
+HOME VIEW OF APPLICATION, SHOWS ALL TASKS IN LIST, AND HAS BUTTONS TO
+ADD NEW TASK, OR OPEN SETTINGS PAGE
+from this page the user can tap any task in the list to open it in task view
+
+-- CAPTURE TOUCH GESTURES AND MAKE REASONABLE USE OF THEM
+  - long presses are captured here to bring up an alert asking permission to delete all tasks
+*/
 
 class Home extends StatefulWidget {
   @override
@@ -15,50 +19,20 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  // initialise databasehelper for service interactions with database
   DatabaseHelper _dbClient = DatabaseHelper();
-  final AuthService _auth = AuthService();
-
-  Future<void> _showMyDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Delete All"),
-          content: Text("Are you sure you want to delete all tasks?"),
-          actions: [
-            TextButton(
-                child: Text("Cancel"),
-                onPressed: () {
-                  print("Cancel");
-                  Navigator.of(context).pop();
-                }),
-            TextButton(
-                child: Text("Delete All"),
-                onPressed: () {
-                  print("Delete All");
-                  _dbClient.removeAllTasks().then((value) {
-                    setState(() {});
-                  });
-                  Navigator.of(context).pop();
-                })
-          ],
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
+        // long press touch gesture captured to delete all tasks
         child: GestureDetector(
           onLongPress: () {
             print("Long press");
-            _showMyDialog();
+            _showDeleteDialog();
           },
           child: Container(
-            // light indigo background colour, stretching across full width
             color: Colors.indigo[50],
             width: double.infinity,
             padding: EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 0.0),
@@ -77,7 +51,6 @@ class _HomeState extends State<Home> {
                             height: 75,
                             width: 75,
                           ),
-                          // widget to show each task
                         ),
                         Text('      Let\'s Do',
                             style: TextStyle(
@@ -89,6 +62,7 @@ class _HomeState extends State<Home> {
                     Expanded(
                       child: FutureBuilder(
                         initialData: [],
+                        // use service and content provider to get tasks from db
                         future: _dbClient.displayTasks(),
                         builder: (context, snapshot) {
                           // remove glow when scrolling
@@ -112,6 +86,7 @@ class _HomeState extends State<Home> {
                                       setState(() {});
                                     });
                                   },
+                                  // use TaskWidget (widgets.dart) to display title and description
                                   child: TaskWidget(
                                     taskTitle: snapshot.data[index].taskTitle,
                                     taskDescription:
@@ -126,6 +101,7 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
+                // Floating settings button in bottom left to open settings page
                 Positioned(
                   bottom: 25.0,
                   child: SizedBox(
@@ -143,14 +119,14 @@ class _HomeState extends State<Home> {
                         backgroundColor: Colors.grey[600]),
                   ),
                 ),
-                // Position for floating action button
+                // Floating add button to add new task
                 Positioned(
                   right: 0.0,
                   bottom: 20.0,
                   child: SizedBox(
                     height: 75,
                     width: 75,
-                    // button to create new task then refresh state
+                    // button to create new task, open taskview, then refresh state
                     child: FloatingActionButton(
                         heroTag: "addBtn",
                         onPressed: () {
@@ -171,6 +147,38 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
+    );
+  }
+
+  // function to show confirmation alert after long press to delete all tasks
+  Future<void> _showDeleteDialog() async {
+    return showDialog<void>(
+      context: context,
+      // user must choose an option
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Delete All"),
+          content: Text("Are you sure you want to delete all tasks?"),
+          actions: [
+            // cancel button to dismiss alert without any action
+            TextButton(
+                child: Text("Cancel"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }),
+            // delete all button to call removeAllTasks method
+            TextButton(
+                child: Text("Delete All"),
+                onPressed: () {
+                  _dbClient.removeAllTasks().then((value) {
+                    setState(() {});
+                  });
+                  Navigator.of(context).pop();
+                })
+          ],
+        );
+      },
     );
   }
 }

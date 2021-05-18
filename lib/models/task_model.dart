@@ -1,3 +1,5 @@
+// model for a task, allowing it to be stored and retrieved from sql database
+
 class Task {
   final int id;
   final String taskTitle;

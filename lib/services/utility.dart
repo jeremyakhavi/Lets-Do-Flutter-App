@@ -2,6 +2,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
+// this class is used to convert and revert images for efficient storage in sql database
+
 class Utility {
   static Image imageFromBase64String(String base64String) {
     return Image.memory(

@@ -1,3 +1,6 @@
+// model for sub-tasks allowing them to be stored in sql database
+// includes task ID allowing each sub-task to be associated with a task
+
 class SubTask {
   final int id;
   final int taskID;

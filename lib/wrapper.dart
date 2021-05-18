@@ -4,6 +4,11 @@ import 'package:to_do_app/models/user_model.dart';
 import 'package:to_do_app/views/home.dart';
 import 'package:provider/provider.dart';
 
+/*
+Wrapper is used to return either the home or authenticate view depending
+user logged in or not
+*/
+
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

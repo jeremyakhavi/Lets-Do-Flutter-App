@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:to_do_app/services/auth.dart';
 import 'package:to_do_app/widgets.dart';
 
+// Stateful Widget for the Register view, allows a user to register for a
+// Let's Do account, if they don't already have one, and start using the app
+
 class Register extends StatefulWidget {
   final Function toggleView;
+
+  // screenHeight is used to determine size of logo image to display
   final double screenHeight =
       MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.height;
   Register({this.toggleView});
@@ -14,17 +19,18 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
-  // key used to identify form
+  // key used to identify the form
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
 
-  // text field state
+  // initial states of the text fields
   String email = '';
   String password = '';
   String error = '';
 
   @override
   Widget build(BuildContext context) {
+    // returns loading widget if page is loading, otherwise returns scaffold
     return loading
         ? Loading()
         : Scaffold(
@@ -35,6 +41,7 @@ class _RegisterState extends State<Register> {
               title: Text('Sign up to Let\'s Do',
                   style: TextStyle(color: Colors.blue)),
               actions: <Widget>[
+                // button to allow user to toggle between register and sign in
                 TextButton.icon(
                     icon: Icon(Icons.person),
                     label: Text('Sign In'),
@@ -46,6 +53,7 @@ class _RegisterState extends State<Register> {
             body: Column(
               children: [
                 Container(
+                  // logo image is 0.1 * screenHeight to ensure there are no overflows
                   child: Image(
                     image: AssetImage('assets/logo.png'),
                     height: widget.screenHeight * 0.1,
@@ -61,7 +69,11 @@ class _RegisterState extends State<Register> {
                         SizedBox(height: 20.0),
                         TextFormField(
                             decoration:
+                                // decoration is a constant from widgets.dart file
+                                // allows for consistency and no duplication of code
                                 textInputDecoration.copyWith(hintText: 'Email'),
+                            // placeholders in email and password field
+                            // when field is changed trim the value to remove extra tabs or spaces
                             validator: (val) =>
                                 val.isEmpty ? 'Enter an email' : null,
                             onChanged: (val) {
@@ -79,6 +91,7 @@ class _RegisterState extends State<Register> {
                               setState(() => password = val.trim());
                             }),
                         SizedBox(height: 20.0),
+                        // button to register new account using email and password provided
                         TextButton(
                           child: Text(
                             'Register',
@@ -88,9 +101,11 @@ class _RegisterState extends State<Register> {
                           ),
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
+                              // open loading widget is form is valid whilst registering credentials
                               setState(() => loading = true);
                               dynamic result = await _auth.registerWithEmail(
                                   email, password);
+                              // if no success returned then show error message
                               if (result == null) {
                                 setState(() {
                                   error = 'please enter a valid email';

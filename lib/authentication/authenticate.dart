@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:to_do_app/authentication/register.dart';
 import 'package:to_do_app/authentication/signin.dart';
 
+// Stateful widget used for authentication, it allows for a toggle
+// between either the login view, or the register view
+
 class Authenticate extends StatefulWidget {
   @override
   _AuthenticateState createState() => _AuthenticateState();

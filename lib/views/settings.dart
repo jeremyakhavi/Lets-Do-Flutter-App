@@ -5,7 +5,17 @@ import 'package:share/share.dart';
 import 'package:to_do_app/views/userguide.dart';
 import 'package:intent/intent.dart' as android_intent;
 import 'package:intent/action.dart' as android_action;
-import 'package:intent/extra.dart' as android_extra;
+
+/* 
+-- USE INTENTS TO MOVE TO AN OUTSIDE APP
+  - this is implemented by using intents to open up the mail app to email the dev
+
+-- USE SHARED PREFERENCES
+  - this is implemented here to view how many tasks have been created using the app
+
+-- IMPLEMENT AND USE A SHAREACTIONPROVIDER
+  - this is implemented in the floating share button, allowing users to share text about the app
+*/
 
 class SettingsView extends StatefulWidget {
   @override
@@ -13,10 +23,13 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
+  // initialise Authorisation service
   final AuthService _auth = AuthService();
+
   int _counter = 0;
 
   _SettingsViewState() {
+    // get count of tasks created from shared preferences
     getCount().then((val) => setState(() {
           _counter = val;
         }));
@@ -27,7 +40,6 @@ class _SettingsViewState extends State<SettingsView> {
     return Scaffold(
         body: SafeArea(
             child: Container(
-                // light indigo background colour, stretching across full width
                 color: Colors.indigo[50],
                 width: double.infinity,
                 child: Stack(children: [
@@ -84,6 +96,7 @@ class _SettingsViewState extends State<SettingsView> {
                         indent: 20,
                         endIndent: 20,
                       ),
+                      // uses Intents to open mail app with auto filled email address
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Column(
@@ -123,13 +136,13 @@ class _SettingsViewState extends State<SettingsView> {
                               backgroundColor: Colors.lightBlue[900]);
                         })),
                   ),
+                  // button to open WebView for userguide
                   Positioned(
                     right: 25.0,
                     bottom: 25.0,
                     child: SizedBox(
                       height: 75,
                       width: 75,
-                      // button to open WebView for userguide
                       child: FloatingActionButton(
                           heroTag: "userGuideBtn",
                           onPressed: () {
@@ -145,11 +158,11 @@ class _SettingsViewState extends State<SettingsView> {
                 ]))));
   }
 
-  // function to bring up share sheet using ACTION_SEND intent on Android
+  // function to bring up share sheet using ACTION_SEND Intent on Android
   _onShare(BuildContext context) async {
     final RenderBox box = context.findRenderObject() as RenderBox;
     await Share.share(
-        'I am being so productive with Let\'s Do, you should download it too!',
+        'I have created $_counter tasks with Let\'s Do, talk about productivity!',
         subject: 'I am being so productive with Lets Do',
         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }

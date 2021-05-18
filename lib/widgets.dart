@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:to_do_app/services/database.dart';
 
+/*
+File of widgets being used across the application
+*/
+
 // Widget for individual tasks on home page
 class TaskWidget extends StatelessWidget {
   final String taskTitle;
@@ -48,6 +52,7 @@ class TaskWidget extends StatelessWidget {
   }
 }
 
+// CheckListWidget to show each subtask as an object that can be ticked off
 // ignore: must_be_immutable
 class CheckListWidget extends StatefulWidget {
   final String subTask;
@@ -59,6 +64,7 @@ class CheckListWidget extends StatefulWidget {
 }
 
 class _CheckListWidgetState extends State<CheckListWidget> {
+  // initialise database content provider
   DatabaseHelper _dbClient = DatabaseHelper();
   @override
   Widget build(BuildContext context) {
@@ -66,7 +72,9 @@ class _CheckListWidgetState extends State<CheckListWidget> {
         builder: (BuildContext context, StateSetter setState) {
       return Center(
         child: CheckboxListTile(
+          // set value of checkbox to complete value in database
           value: widget.complete,
+          // set text to subtask value, if none then show '(no sub task)'
           title: Text(
             widget.subTask ?? "(No sub task)",
             // grey out and strikethrough completed sub-tasks
@@ -106,6 +114,7 @@ class RemoveGlow extends ScrollBehavior {
   }
 }
 
+// loading widget to be used when logging in or registering
 class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -118,6 +127,7 @@ class Loading extends StatelessWidget {
   }
 }
 
+// contstant for text input decorations used for email and password fields
 const textInputDecoration = InputDecoration(
   fillColor: Colors.white,
   filled: true,
