@@ -86,7 +86,6 @@ class _CheckListWidgetState extends State<CheckListWidget> {
           ),
           controlAffinity: ListTileControlAffinity.leading,
           onChanged: (bool value) async {
-            print(value);
             // if not complete, then change to 0 (incomplete) in database
             if (value == false) {
               await _dbClient.updateSubTask(widget.taskID, 0);

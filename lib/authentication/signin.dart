@@ -22,10 +22,24 @@ class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
 
+  FocusNode _focusEmail, _focusPassword;
+
   // initial states of the text fields
   String email = '';
   String password = '';
   String error = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _focusEmail = FocusNode();
+    _focusPassword = FocusNode();
+  }
+
+  void disposeFocus() {
+    _focusEmail.dispose();
+    _focusPassword.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +82,7 @@ class _SignInState extends State<SignIn> {
                       children: <Widget>[
                         SizedBox(height: 20.0),
                         TextFormField(
+                            focusNode: _focusEmail,
                             decoration:
                                 // using constant from widgets.dart file
                                 textInputDecoration.copyWith(hintText: 'Email'),
@@ -77,9 +92,13 @@ class _SignInState extends State<SignIn> {
                                 val.isEmpty ? 'Enter an email' : null,
                             onChanged: (val) {
                               setState(() => email = val.trim());
+                            },
+                            onFieldSubmitted: (value) {
+                              _focusPassword.requestFocus();
                             }),
                         SizedBox(height: 20.0),
                         TextFormField(
+                            focusNode: _focusPassword,
                             decoration: textInputDecoration.copyWith(
                                 hintText: 'Password'),
                             obscureText: true,

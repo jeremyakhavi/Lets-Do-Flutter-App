@@ -23,10 +23,24 @@ class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
 
+  FocusNode _focusEmail, _focusPassword;
+
   // initial states of the text fields
   String email = '';
   String password = '';
   String error = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _focusEmail = FocusNode();
+    _focusPassword = FocusNode();
+  }
+
+  void disposeFocus() {
+    _focusEmail.dispose();
+    _focusPassword.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +50,7 @@ class _RegisterState extends State<Register> {
         : Scaffold(
             backgroundColor: Colors.indigo[50],
             appBar: AppBar(
+              automaticallyImplyLeading: false, // hide back button
               backgroundColor: Colors.transparent,
               elevation: 0.0,
               title: Text('Sign up to Let\'s Do',
@@ -68,6 +83,7 @@ class _RegisterState extends State<Register> {
                       children: <Widget>[
                         SizedBox(height: 20.0),
                         TextFormField(
+                            focusNode: _focusEmail,
                             decoration:
                                 // decoration is a constant from widgets.dart file
                                 // allows for consistency and no duplication of code
@@ -78,9 +94,13 @@ class _RegisterState extends State<Register> {
                                 val.isEmpty ? 'Enter an email' : null,
                             onChanged: (val) {
                               setState(() => email = val.trim());
+                            },
+                            onFieldSubmitted: (value) {
+                              _focusPassword.requestFocus();
                             }),
                         SizedBox(height: 20.0),
                         TextFormField(
+                            focusNode: _focusPassword,
                             decoration: textInputDecoration.copyWith(
                                 hintText: 'Password'),
                             obscureText: true,

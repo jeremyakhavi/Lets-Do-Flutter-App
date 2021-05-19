@@ -58,8 +58,6 @@ class _TaskViewState extends State<TaskView> {
       setState(() {
         images.clear();
         images.addAll(imgs);
-        print(images);
-        print(imgs.runtimeType);
       });
     });
   }
@@ -73,7 +71,6 @@ class _TaskViewState extends State<TaskView> {
 
   // function uses Intent and ImagePicker to get permissions and open camera
   Future getImage() async {
-    print("Function running");
     final pickedFile = await picker.getImage(source: ImageSource.camera);
     setState(() {
       if (pickedFile != null) {
@@ -133,8 +130,6 @@ class _TaskViewState extends State<TaskView> {
                       child: Focus(
                         onFocusChange: (value) async {
                           if (!value) {
-                            print(_titleController.text);
-                            print('FOCUS CHANGE');
                             // instantiate Task object to add to task table in database
                             // ensure that field is not empty
                             if (_titleController.text != "") {
@@ -173,7 +168,7 @@ class _TaskViewState extends State<TaskView> {
                           ),
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Task Title",
+                            hintText: "Task Title (tap enter)",
                           ),
                         ),
                       ),

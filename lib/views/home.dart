@@ -29,7 +29,6 @@ class _HomeState extends State<Home> {
         // long press touch gesture captured to delete all tasks
         child: GestureDetector(
           onLongPress: () {
-            print("Long press");
             _showDeleteDialog();
           },
           child: Container(
@@ -75,7 +74,6 @@ class _HomeState extends State<Home> {
                                 // wrap in gesture detector to open task on tap
                                 return GestureDetector(
                                   onTap: () {
-                                    print(snapshot.data[index].id);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
